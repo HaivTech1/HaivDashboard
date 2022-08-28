@@ -67,15 +67,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#faqs">FAQs</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
 
                     </ul>
 
                     <div class="my-2 ms-lg-2">
                         @if (Route::has('login'))
                         @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-secondary w-xs">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="btn btn-primary w-xs">Dashboard</a>
                         @else
-                        <a href="{{ url('/login') }}" class="btn btn-secondary w-xs">Log in</a>
+                        <a href="{{ url('/login') }}" class="btn btn-primary w-xs">Log in</a>
                         @endauth
                         @endif
                     </div>
@@ -85,7 +88,7 @@
 
         <!-- hero section start -->
         <section class="section hero-section bg-ico-hero" id="home">
-            <div class="bg-overlay bg-primary"></div>
+            <div class="bg-overlay bg-secondary"></div>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">
@@ -93,9 +96,14 @@
                             <h1 class="text-white fw-semibold mb-3 hero-title">{{ application('name')}} - {{ application('motto')}}</h1>
                             <p class="font-size-14">{{ application('description')}}</p>
                             
-                            <div class="d-flex flex-wrap gap-2 mt-4">
-                                <button type="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#goAbout" aria-controls="goAbout" class="btn btn-secondary">About us</button>
-                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#goContact" aria-controls="goContact" class="btn btn-light">Contact us</button>
+                            <div class="d-flex flex-wrap justify-content-between gap-2 mt-4">
+                                <a href="#about" class="social-list-item bg-white text-white">
+                                    <i class="bx bx-caret-down text-primary font-size-20 mt-1"></i>
+                                </a>
+
+                                <div>
+                                    <button type="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#goContact" aria-controls="goContact" class="btn btn-primary text-secondary fw-semibold ">Explore More</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,7 +210,7 @@
                     <div class="col-lg-12">
                         <div class="text-center mb-5">
                             <div class="small-title">About us</div>
-                            <h4>What is ICO Token?</h4>
+                            <h4>What our brand says!</h4>
                         </div>
                     </div>
                 </div>
@@ -210,14 +218,20 @@
                     <div class="col-lg-5">
   
                         <div class="text-muted">
-                            <h4>Best ICO for your cryptocurrency business</h4>
-                            <p>If several languages coalesce, the grammar of the resulting that of the individual new common language will be more simple and regular than the existing.</p>
-                            <p class="mb-4">It would be necessary to have uniform pronunciation.</p>
+                            <h4>{{ application('motto') }}</h4>
+                            <p>At HaivTech we dash through great length to see that our 
+                                clients achieve unique results. The Haiv is a special naming 
+                                from the word “Hive”. Hexagon, i.e 6 bounded polygon are 
+                                related to the “bee-comb” and the HaivTech mark is based 
+                                on 2 half hexagons.</p>
+                            <p class="mb-4">One represent our client and the other represent us going 
+                                through length and degrees to prove we are valuable assets 
+                                through our unique experience and dynamic approach</p>
 
-                            <div class="d-flex flex-wrap gap-2">
+                            {{-- <div class="d-flex flex-wrap gap-2">
                                 <a href="javascript: void(0);" class="btn btn-success">Read More</a>
                                 <a href="javascript: void(0);" class="btn btn-outline-primary">How It work</a>
-                            </div>
+                            </div> --}}
                             
                             <div class="row mt-4">
                                 <div class="col-lg-4 col-6">
@@ -358,21 +372,23 @@
                         <div class="hori-timeline" dir="ltr">
                             <div class="owl-carousel owl-theme events navs-carousel" id="timeline-carousel">
                                
-                                <div class="item event-list active">
-                                    <div>
-                                        <div class="event-date">
-                                            <div class="text-primary mb-1">February, 2020</div>
-                                            <h5 class="mb-4">ICO & Token Design</h5>
-                                        </div>
-                                        <div class="event-down-icon">
-                                            <i class="bx bx-down-arrow-circle h1 text-primary down-arrow-icon"></i>
-                                        </div>
+                                @foreach ($events as $event)
+                                    <div class="item event-list @if($event->category() === 'bg-success') active @endif">
+                                        <div>
+                                            <div class="event-date">
+                                                <div class="text-primary mb-1">{{ $event->startDate() }}</div>
+                                                <h5 class="mb-4">{{ $event->title() }}</h5>
+                                            </div>
+                                            <div class="event-down-icon">
+                                                <i class="bx bx-down-arrow-circle h1 text-primary down-arrow-icon"></i>
+                                            </div>
 
-                                        <div class="mt-3 px-3">
-                                            <p class="text-muted">For science, music, sport, etc, Europe uses the same vocabulary.</p>
+                                            <div class="mt-3 px-3">
+                                                <p class="text-muted">{{ $event->description() }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
 
                             </div>
                         </div>
@@ -714,7 +730,81 @@
             <!-- end container -->
         </section>
         <!-- Faqs end -->
-        
+
+       
+        <section class="section bg-white" id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mb-5">
+                            <div class="small-title">Contact</div>
+                            <h4>You can drop us a message:</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form>
+                           
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingnameInput" placeholder="Enter name">
+                                        <label for="floatingnameInput">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="floatingnumberInput" placeholder="Enter phone number">
+                                        <label for="floatingnumberInput">Phone Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="floatingemailInput" placeholder="Enter Email address">
+                                        <label for="floatingemailInput">Email address</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingmessageInput" placeholder="Enter message">
+                                <label for="floatingmessageInput">Message</label>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary w-md">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="card-title">Gallary</h4>
+                                <p class="card-title-desc">A little glimpse from our archive. </p>
+
+                                <div class="popup-gallery d-flex flex-wrap">
+                                    @foreach ($galleries as $gallery)
+                                        <a href="{{ $gallery->image() }}" title="{{ $gallery->title() }}">
+                                            <div class="img-fluid">
+                                                <img src="{{ $gallery->image() }}" alt="" width="120">
+                                            </div>
+                                        </a>
+                                    @endforeach
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> 
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
 
         <!-- Footer start -->
         <footer class="landing-footer">
@@ -817,16 +907,6 @@
             <!-- end container -->
         </footer>
         <!-- Footer end -->
-
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="goAbout" aria-labelledby="offcanvasWithBothOptionsLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdroped with scrolling</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <p>Try scrolling the rest of the page to see this option in action.</p>
-            </div>
-        </div>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="goContact" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">

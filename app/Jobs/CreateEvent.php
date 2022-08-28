@@ -16,6 +16,7 @@ class CreateEvent implements ShouldQueue
     private $title;
     private $description;
     private $category;
+    private $start;
 
     /**
      * Create a new job instance.
@@ -26,13 +27,15 @@ class CreateEvent implements ShouldQueue
         User $author,
         string $title,
         ?string $description,
-        ?string $category
+        ?string $category,
+        ?string $start
     )
     {
         $this->author = $author;
         $this->title = $title;
         $this->description = $description;
         $this->category = $category;
+        $this->start = $start;
     }
 
     public static function fromRequest(StoreEventRequest $request): self
@@ -41,7 +44,8 @@ class CreateEvent implements ShouldQueue
             $request->author(),
             $request->title(),
             $request->description(),
-            $request->category()
+            $request->category(),
+            $request->start()
         );
     }
 
@@ -56,6 +60,7 @@ class CreateEvent implements ShouldQueue
             'title'             => $this->title,
             'description'       => $this->description,
             'category'          => $this->category,
+            'start'          => $this->start,
         ]);
 
         $event->authoredBy($this->author);

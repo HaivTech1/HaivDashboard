@@ -11,6 +11,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "jenssegers/agent": "^2.6",
+        "jeroendesloovere/vcard": "^1.7",
         "laravel/fortify": "^1.13",
         "laravel/framework": "^8.75",
         "laravel/jetstream": "^2.8",

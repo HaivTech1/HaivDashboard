@@ -50,4 +50,9 @@ class StoreEventRequest extends FormRequest
     {
         return $this->category;
     }
+
+    public function start(): ?string
+    {
+        return $this->start;
+    }
 }

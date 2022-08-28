@@ -3,14 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\Property;
-use Illuminate\Bus\Queueable;
 use App\Http\Requests\PropertyRequest;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use App\Services\SaveImageServiceMultiple;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UpdateProperty implements ShouldQueue
 {
@@ -27,15 +23,8 @@ class UpdateProperty implements ShouldQueue
     private $address;
     private $latitude;
     private $longitude;
-    private $frequency;
     private $description;
-    private $furnish;
-    private $fence;
-    private $wifi;
-    private $park;
-    private $conditioning;
-    private $pool;
-    private $tiles;
+    private $specifications;
     private $image;
     private $video;
 
@@ -56,15 +45,8 @@ class UpdateProperty implements ShouldQueue
         ?string $address,
         ?string $latitude,
         ?string $longitude,
-        ?string $frequency,
         string $description,
-        bool $furnish,
-        bool $fence,
-        bool $wifi,
-        bool $park,
-        bool $conditioning,
-        bool $pool,
-        bool $tiles,
+        string $specifications,
         ?array $image = [],
         ?string $video
     )
@@ -80,15 +62,8 @@ class UpdateProperty implements ShouldQueue
         $this->address = $address;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->frequency = $frequency;
         $this->description = $description;
-        $this->furnish = $furnish;
-        $this->fence = $fence;
-        $this->wifi = $wifi;
-        $this->park = $park;
-        $this->conditioning = $conditioning;
-        $this->pool = $pool;
-        $this->tiles = $tiles;
+        $this->specificaions = $specificaions;
         $this->image = $image;
         $this->video = $video;
     }
@@ -107,15 +82,8 @@ class UpdateProperty implements ShouldQueue
             $request->address(),
             $request->latitude(),
             $request->longitude(),
-            $request->frequency(),
             $request->description(),
-            $request->furnish(),
-            $request->fence(),
-            $request->wifi(),
-            $request->park(),
-            $request->conditioning(),
-            $request->pool(),
-            $request->tiles(),
+            $request->specifications(),
             $request->image(),
             $request->video(),
             
@@ -135,30 +103,21 @@ class UpdateProperty implements ShouldQueue
             'address'                   => $this->address,
             'latitude'                  => $this->latitude,
             'longitude'                 => $this->longitude,
-            'frequency'                 => $this->frequency,
             'description'               => $this->description,
-            'furnish'                   => $this->furnish ? true : false,
-            'fence'                     => $this->fence ? true : false,
-            'wifi'                      => $this->wifi ? true : false,
-            'park'                      => $this->park ? true : false,
-            'conditioning'              => $this->conditioning ? true : false,
-            'pool'                      => $this->pool ? true : false,
-            'tiles'                     => $this->tiles ? true : false,
+            'specifications'            => json_encode(explode(", ", $this->specifications))
         ]);
 
         if(!is_null($this->image))
         {
             foreach($this->image as $file)
             {
-                $name = uniqid() . '_' . time(). '.' . $file->getClientOriginalExtension();
-                $path = storage_path('app/public/properties/') ;
-                $file->move($path, $name);
-                $Imgdata[] = $name;
+                $uploadedFileUrl = Cloudinary::upload($file->getRealPath(), [
+                    'folder' => 'properties'
+                ])->getSecurePath();
+
+                $Imgdata[] = $uploadedFileUrl;
             }
-        }
-        else
-        {
-            $Imgdata = 'noimg';
+             $property->image = json_encode($Imgdata);
         }
         
         return $this->property;

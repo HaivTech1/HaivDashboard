@@ -83,4 +83,9 @@ class Event extends Model
      {
          return $query->where('status', true);
      }
+
+     public function getRouteKeyName()
+     {
+        return 'title';
+     }
 }

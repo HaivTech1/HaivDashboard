@@ -32,7 +32,7 @@ class ApplicationSeeder extends Seeder
             'motto'     =>  'Unique Solutions for You!',
             'slogan'        =>  'Unique Solutions for You!',
             'regNo'        =>  'RC43243',
-            'description'       =>  'Unique Solutions for You!',
+            'description'       =>  'HaivTech is an end-to-end provider of business development services. Whether you’re looking for a turnkey marketing strategy, financial strategy, or services specific to a short-term campaign and an all round Software development. Our experience and approach are sure to prove to be a valuable asset',
             
             ],
         ];

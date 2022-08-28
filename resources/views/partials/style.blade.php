@@ -21,6 +21,9 @@
 
 <link href="{{ asset('libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 
+<!-- Lightbox css -->
+<link href="{{ asset('libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
+
   <!-- owl.carousel css -->
   <link rel="stylesheet" href="{{ asset('libs/owl.carousel/assets/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/libs/owl.carousel/assets/owl.theme.default.min.css') }}">
@@ -32,7 +35,7 @@
 @cloudinaryJS
 @livewireStyles
 @livewireScripts
-
+@yield('styles')
 <style>
 .la-ball-spin,
 .la-ball-spin>div {

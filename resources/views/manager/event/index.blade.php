@@ -25,24 +25,14 @@
                            
                             
                             <div id="external-events" class="mt-2">
-                                <br>
-                                <p class="text-muted">Drag and drop your event or click in the calendar</p>
-                                <div class="external-event fc-event bg-success" data-class="bg-success">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>New Event Planning
-                                </div>
-                                <div class="external-event fc-event bg-info" data-class="bg-info">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Meeting
-                                </div>
-                                <div class="external-event fc-event bg-warning" data-class="bg-warning">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Generating Reports
-                                </div>
-                                <div class="external-event fc-event bg-danger" data-class="bg-danger">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Create New theme
-                                </div>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">
+                                    <i class="fa fa-eye"></i>
+                                    <span>View Events</span>
+                                </button>
                             </div>
 
                             <div class="row justify-content-center mt-5">
-                                <img src="assets/images/verification-img.png" alt="" class="img-fluid d-block">
+                                <img src="{{ asset('/images/verification-img.png') }}" alt="" class="img-fluid d-block">
                             </div>
                         </div>
                     </div>
@@ -125,6 +115,73 @@
             </div>
             <!-- end modal-->
 
+            <div id="exampleModalFullscreen" class="modal fade" tabindex="-1" aria-labelledby="#exampleModalFullscreenLabel" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalFullscreenLabel">{{ application('name') }} Events</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-body">
+                                
+                                    <table class="table align-middle table-nowrap table-check">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 20px;" class="align-middle">
+                                                    <div class="form-check font-size-16">
+                                                        <input class="form-check-input" type="checkbox" id="checkAll"
+                                                            wire:model="selectPageRows">
+                                                        <label class="form-check-label" for="checkAll"></label>
+                                                    </div>
+                                                </th>
+                                                <th class="align-middle">Title</th>
+                                                <th class="align-middle">Category</th>
+                                                <th class="align-middle">description</th>
+                                                <th class="align-middle">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($events as $event)
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check font-size-16">
+                                                        <input class="form-check-input" value="{{ $event->id }}" type="checkbox"
+                                                            id="{{ $event->id }}" wire:model="selectedRows">
+                                                        <label class="form-check-label" for="{{ $event->id }}"></label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <livewire:components.edit-title :model='$event' field='title' :wire:key='$event->id()'/>
+                                                </td>
+                                                <td>
+                                                    <livewire:components.edit-title :model='$event' field='category' :wire:key='$event->id()'/>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <livewire:components.edit-title :model='$event' field='description' :wire:key='$event->id()'/>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <livewire:components.toggle-button :model='$event' field='status'
+                                                    :wire:key='$event->id()' />
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+
         </div>
     </div>
 
@@ -160,7 +217,8 @@
                         var c = [
                             @foreach ($events as $event){
                                 title: "{{ $event->title() }}",
-                                start: "{{ $event->created_at }}"
+                                start: "{{ $event->start }}",
+                                className: "{{ $event->category() }}",
                             },
                             @endforeach
                         ],
@@ -216,7 +274,11 @@
                                 var data = $('#form-event').serializeArray();
                                 var start = r.date;
                                 var url = "{{ route('event.store') }}";
-                                console.log(start);
+                                let dateStr = r.date
+                                var newDate = new Date(dateStr).toISOString()
+                                var start = {'name': 'start', 'value': newDate};
+                                data[4] = start;
+                                console.log(data);
 
                                 $.ajax({
                                     type: "POST",
@@ -236,6 +298,16 @@
                             }, m.addEvent(t)), l.modal("hide"))
                         }), 
                         g("#btn-delete-event").on("click", function (e) {
+                            console.log(i._def.title)
+                            var event = i._def.title
+                            $.ajax({
+                                type: "post",
+                                url: "{{ route('event.destroy') }}",
+                                data: event,
+                                success: function (response) {
+                                    
+                                }
+                            });
                             i && (i.remove(), i = null, l.modal("hide"))
                         }), 
                         g("#btn-new-event").on("click", function (e) {

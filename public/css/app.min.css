@@ -4284,7 +4284,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before {
 }
 
 .auth-full-bg .bg-overlay {
-    background: url(../images/bg-auth-overlay.png);
+    background: url('../images/bg-auth-overlay.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center
@@ -5082,7 +5082,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before {
 }
 
 .hero-section.bg-ico-hero {
-    background-image: url('../images/crypto/background.png');
+    background-image: url('../images/6.png');
     background-size: cover;
     background-position: top
 }

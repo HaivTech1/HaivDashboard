@@ -1,4 +1,10 @@
 <x-app-layout>
+    @section('title', application('name')." | Profile Page")
+
+    @section('styles')
+        <link href="{{ asset('css/app.css') }}"  rel="stylesheet" type="text/css" />
+    @endsection
+    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}

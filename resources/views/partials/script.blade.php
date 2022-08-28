@@ -35,6 +35,13 @@
 <script src="{{ asset('js/pages/task-create.init.js') }}"></script>
 {{-- <script src="{{ asset('libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/pages/dashboard.init.js') }}"></script> --}}
+
+ <!-- Magnific Popup-->
+ <script src="{{ asset('libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+
+ <!-- lightbox init js-->
+ <script src="{{ asset('js/pages/lightbox.init.js') }}"></script>
+
 <script src="{{ asset('js/app.min.js') }}"></script>
 <script src="{{ asset('js/toastr.min.js') }}"></script>
 <script src="{{ asset('js/notiflix.js') }}"></script>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Event;
+use App\Models\Gallery;
 use App\Models\Pioneer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContestController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PioneerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PropertyController;
@@ -19,7 +21,8 @@ use App\Http\Controllers\ApplicationController;
 Route::get('/', function () {
     return view('welcome',[
         'pioneers' => Pioneer::all(),
-        'events' => Event::available()->get()
+        'events' => Event::all(),
+        'galleries' => Gallery::galleryImage()->get()
     ]);
 });
 
@@ -28,7 +31,9 @@ Route::middleware([
 ])->group(function () {
     
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard', [
+            'galleries' => Gallery::available()->get()
+        ]);
     })->name('dashboard');
 
     Route::group(['prefix' => 'property', 'as' => 'property.'], function () {
@@ -99,6 +104,11 @@ Route::middleware([
     Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
         Route::get('/', [EventController::class, 'index'])->name('index');
         Route::post('/', [EventController::class, 'store'])->name('store');
+        Route::post('/delete', [EventController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['prefix' => 'gallery', 'as' => 'gallery.'], function () {
+        Route::post('/', [GalleryController::class, 'store'])->name('store');
     });
 });
 
