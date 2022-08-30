@@ -53,7 +53,7 @@ class SendNewContactNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'carrier' => $this->contact->id,
+            'from' => $this->contact->name,
             'message' => $this->contact->message,
         ];
     }

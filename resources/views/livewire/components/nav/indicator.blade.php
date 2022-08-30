@@ -24,7 +24,7 @@
                     <a href="javascript: void(0);" class="text-reset notification-item" wire:click="markAsRead('{{ $notification->id }}')">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <h6 class="mb-1" key="t-your-order">Your order is placed</h6>
+                                <h6 class="mb-1" key="t-your-order">{{ $notification->data['from'] }}</h6>
                                 <div class="font-size-12 text-muted">
                                     <p class="mb-1" key="t-grammer">{{ $notification->data['message'] }}</p>
                                     <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->diffForHumans() }}</span></p>
