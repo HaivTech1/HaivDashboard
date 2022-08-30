@@ -255,23 +255,23 @@
                             <div class="row">
                                 <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner" role="listbox">
-                                        @foreach ($jobs as $key => $job)
-                                        <div class="carousel-item @if($key === 0) active @endif">
+                                        @foreach ($jobs as $job)
+                                        <div class="carousel-item active">
                                             <img src="{{ $job->image() }}" alt="{{ $job->title() }}" class="d-block img-fluid">
-                                            {{-- <div class="carousel-caption d-none d-md-block text-white-50">
+                                            <div class="carousel-caption d-none d-md-block text-white-50">
                                                 <h5 class="text-white">{{ $job->title() }}</h5>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                         @endforeach
                                     </div>
-                                    {{-- <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
+                                    <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </a>
                                     <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
-                                    </a> --}}
+                                    </a>
                                 </div>
                             </div>
                             </div>

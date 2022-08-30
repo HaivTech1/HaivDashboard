@@ -257,7 +257,8 @@
                     } // else...
 
                     if (file.size >= 2000000 ) {
-                        return alert('You cannot upload this file because its size exceeds the maximum limit of 2 MB.');
+                       alert('You cannot upload this file because its size exceeds the maximum limit of 2 MB.');
+                        return;
                     }
                     
                     var reader = new FileReader();

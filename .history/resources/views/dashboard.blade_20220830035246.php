@@ -30,9 +30,9 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="post-recent" role="tabpanel">
-                                <ul class="list-group list-group-flush">
+                                <table class="list-group list-group-flush">
                                     @foreach ($galleries as $gallery)
-                                        <li class="list-group-item py-3">
+                                        <tbody class="list-group-item py-3">
                                             <div class="d-flex">
                                                 <div class="me-3">
                                                     <img src="{{ $gallery->image() }}" alt="" class="avatar-md h-auto d-block rounded">
@@ -56,9 +56,10 @@
                                                     :wire:key='$gallery->id()' />
                                                 </div>
                                             </div>
-                                        </li>
+                                        </tbody>
                                     @endforeach
-                                </ul>
+                                </table>
+                                {{ $galleries->links('pagination::custom-pagination')}}
                             </div>
                         </div>
                         <!-- end tab content -->

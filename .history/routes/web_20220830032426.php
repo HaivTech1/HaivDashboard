@@ -23,8 +23,8 @@ Route::get('/', function () {
     return view('welcome',[
         'pioneers' => Pioneer::all(),
         'events' => Event::all(),
-        'galleries' => Gallery::available()->galleryImage()->paginate(5),
-        'jobs' => Gallery::available()->jobImage()->get()
+        'galleries' => Gallery::galleryImage()->paginate(5),
+        'jobs' => Gallery::jobImage()->get()
     ]);
 });
 

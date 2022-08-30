@@ -130,7 +130,7 @@
                                     <x-form.error for="image" />
                                 </div>
                                 
-                                <div class="col-md-6 mb-2">
+                                <div class="col-md-12 mb-2">
                                     <div id="preview"></div>
                                 </div>
                             </div>
@@ -255,10 +255,6 @@
                     if (!/\.(jpe?g|png|gif)$/i.test(file.name)){
                         return alert(file.name +" is not an image");
                     } // else...
-
-                    if (file.size >= 2000000 ) {
-                        return alert('You cannot upload this file because its size exceeds the maximum limit of 2 MB.');
-                    }
                     
                     var reader = new FileReader();
 

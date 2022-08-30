@@ -32,31 +32,31 @@
                             <div class="tab-pane active" id="post-recent" role="tabpanel">
                                 <ul class="list-group list-group-flush">
                                     @foreach ($galleries as $gallery)
-                                        <li class="list-group-item py-3">
-                                            <div class="d-flex">
-                                                <div class="me-3">
-                                                    <img src="{{ $gallery->image() }}" alt="" class="avatar-md h-auto d-block rounded">
-                                                </div>
-                                                
-                                                <div class="align-self-center overflow-hidden me-auto">
-                                                    <div>
-                                                        <livewire:components.edit-title :model='$gallery' field='title' :wire:key='$gallery->id()'/>
-                                                        <p class="text-muted mb-0">{{ $gallery->createdAt() }}</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="align-self-center overflow-hidden me-auto">
-                                                    <div>
-                                                        <livewire:components.edit-title :model='$gallery' field='type' :wire:key='$gallery->id()'/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dropdown ms-2">
-                                                    <livewire:components.toggle-button :model='$gallery' field='status'
-                                                    :wire:key='$gallery->id()' />
+                                    <li class="list-group-item py-3">
+                                        <div class="d-flex">
+                                            <div class="me-3">
+                                                <img src="{{ $gallery->image() }}" alt="" class="avatar-md h-auto d-block rounded">
+                                            </div>
+                                            
+                                            <div class="align-self-center overflow-hidden me-auto">
+                                                <div>
+                                                    <livewire:components.edit-title :model='$gallery' field='title' :wire:key='$gallery->id()'/>
+                                                    <p class="text-muted mb-0">{{ $gallery->createdAt() }}</p>
                                                 </div>
                                             </div>
-                                        </li>
+
+                                            <div class="align-self-center overflow-hidden me-auto">
+                                                <div>
+                                                    <livewire:components.edit-title :model='$gallery' field='type' :wire:key='$gallery->id()'/>
+                                                </div>
+                                            </div>
+
+                                            <div class="dropdown ms-2">
+                                                <livewire:components.toggle-button :model='$gallery' field='status'
+                                                :wire:key='$gallery->id()' />
+                                            </div>
+                                        </div>
+                                    </li>
                                     @endforeach
                                 </ul>
                             </div>

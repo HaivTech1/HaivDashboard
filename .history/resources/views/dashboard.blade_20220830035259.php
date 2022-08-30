@@ -59,6 +59,7 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                {{ $galleries->links('pagination::custom-pagination')}}
                             </div>
                         </div>
                         <!-- end tab content -->

@@ -34,7 +34,7 @@ Route::middleware([
     
     Route::get('/dashboard', function () {
         return view('dashboard', [
-            'galleries' => Gallery::get()
+            'galleries' => Gallery::paginate(5)
         ]);
     })->name('dashboard');
 
