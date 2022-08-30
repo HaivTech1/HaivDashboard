@@ -7,7 +7,7 @@ use App\Events\ContactMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Notifications\SendNewContactNotification;
 
-class SendContactMessageListener
+class SendContactMessageListener implements ShouldQueue
 {
     public function handle(ContactMessage $event)
     {
