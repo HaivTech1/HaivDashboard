@@ -102,7 +102,7 @@
                                 </a>
 
                                 <div>
-                                    <button type="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#goContact" aria-controls="goContact" class="btn btn-primary text-secondary fw-semibold ">Explore More</button>
+                                    <a href="#contact" class="btn btn-primary text-secondary fw-semibold ">Explore More</a>
                                 </div>
                             </div>
                         </div>
@@ -253,36 +253,27 @@
                     <div class="col-lg-6 ms-auto">
                         <div class="mt-4 mt-lg-0">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="card border">
-                                        <div class="card-body">
-                                            <div class="mb-3">
-                                                <i class="mdi mdi-bitcoin h2 text-success"></i>
+                                <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner" role="listbox">
+                                        @foreach ($jobs as $gallery)
+                                        <div class="carousel-item active">
+                                            <img src="{{ $gallery->image() }}" alt="{{ $gallery->title() }}" class="d-block img-fluid">
+                                            <div class="carousel-caption d-none d-md-block text-white-50">
+                                                <h5 class="text-white">{{ $gallery->title() }}</h5>
                                             </div>
-                                            <h5>Business Development</h5>
-                                            <p class="text-muted mb-0">At vero eos et accusamus et iusto blanditiis</p>
-        
                                         </div>
-                                        <div class="card-footer bg-transparent border-top text-center">
-                                            <a href="javascript: void(0);" class="text-primary">Learn more</a>
-                                        </div>
+                                        @endforeach
                                     </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="card border mt-lg-5">
-                                        <div class="card-body">
-                                            <div class="mb-3">
-                                                <i class="mdi mdi-wallet-outline h2 text-success"></i>
-                                            </div>
-                                            <h5>Wallet</h5>
-                                            <p class="text-muted mb-0">Quis autem vel eum iure reprehenderit</p>
-        
-                                        </div>
-                                        <div class="card-footer bg-transparent border-top text-center">
-                                            <a href="javascript: void(0);" class="text-primary">Learn more</a>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -746,35 +737,35 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <form>
-                           
+                        <form id="contactForm" role="form">
+                           @csrf
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="floatingnameInput" placeholder="Enter name">
+                                        <input type="text" class="form-control" id="floatingnameInput" placeholder="Enter name" name="name">
                                         <label for="floatingnameInput">Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control" id="floatingnumberInput" placeholder="Enter phone number">
+                                        <input type="number" name="phone" class="form-control" id="floatingnumberInput" placeholder="Enter phone number">
                                         <label for="floatingnumberInput">Phone Number</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingemailInput" placeholder="Enter Email address">
+                                        <input type="email" name="email" class="form-control" id="floatingemailInput" placeholder="Enter Email address">
                                         <label for="floatingemailInput">Email address</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingmessageInput" placeholder="Enter message">
+                                <input type="text" name="message" class="form-control" id="floatingmessageInput" placeholder="Enter message">
                                 <label for="floatingmessageInput">Message</label>
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary w-md">Submit</button>
+                                <button id="submit_button" type="submit" class="btn btn-primary w-md">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -908,7 +899,7 @@
         </footer>
         <!-- Footer end -->
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="goContact" aria-labelledby="offcanvasRightLabel">
+        {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="goContact" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
               <h5 id="offcanvasRightLabel">Offcanvas Right</h5>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -916,7 +907,38 @@
             <div class="offcanvas-body">
               ...
             </div>
-        </div>
+        </div> --}}
+
+        @section('scripts')
+            <script>
+                $(document).ready(function () {
+                    $('#contactForm').submit((e) => {
+                        toggleAble('#submit_button', true);
+                        e.preventDefault();
+
+                        var data = $('#contactForm').serializeArray();
+                        var url = "{{ route('contact.store') }}";
+
+                        $.ajax({
+                            type: "POST",
+                            url, 
+                            data,
+                            success: function (response) {
+                                toggleAble('#submit_button', false);
+                                toastr.success(response.message, 'Success!');
+                                console.log(response);
+                                resetForm('#contactForm');
+                            },
+                            error: function (response) {
+                                toggleAble('#submit_button', false);
+                                toastr.error(response.responseJSON.message, 'Failed!');
+                                console.log(response.responseJSON.message);
+                            }
+                        });
+                    });
+                });
+            </script>
+        @endsection
 
         @include('partials.script')
 

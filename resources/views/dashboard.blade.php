@@ -45,6 +45,12 @@
                                                 </div>
                                             </div>
 
+                                            <div class="align-self-center overflow-hidden me-auto">
+                                                <div>
+                                                    <livewire:components.edit-title :model='$gallery' field='type' :wire:key='$gallery->id()'/>
+                                                </div>
+                                            </div>
+
                                             <div class="dropdown ms-2">
                                                 <livewire:components.toggle-button :model='$gallery' field='status'
                                                 :wire:key='$gallery->id()' />

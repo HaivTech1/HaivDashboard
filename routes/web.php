@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PioneerController;
@@ -22,7 +23,8 @@ Route::get('/', function () {
     return view('welcome',[
         'pioneers' => Pioneer::all(),
         'events' => Event::all(),
-        'galleries' => Gallery::galleryImage()->get()
+        'galleries' => Gallery::galleryImage()->get(),
+        'jobs' => Gallery::jobImage()->get()
     ]);
 });
 
@@ -32,7 +34,7 @@ Route::middleware([
     
     Route::get('/dashboard', function () {
         return view('dashboard', [
-            'galleries' => Gallery::available()->get()
+            'galleries' => Gallery::get()
         ]);
     })->name('dashboard');
 
@@ -110,6 +112,12 @@ Route::middleware([
     Route::group(['prefix' => 'gallery', 'as' => 'gallery.'], function () {
         Route::post('/', [GalleryController::class, 'store'])->name('store');
     });
+});
+
+Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
+    Route::get('/', [ContactController::class, 'index'])->name('index')->middleware(['auth', 'admin']);
+    Route::get('/{contact}', [ContactController::class, 'show'])->name('show')->middleware(['auth', 'admin']);
+    Route::post('/', [ContactController::class, 'store'])->name('store');
 });
 
 /**

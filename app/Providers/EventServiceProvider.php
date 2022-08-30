@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Property;
 use App\Models\PostCategory;
 use App\Events\BookingCreated;
+use App\Events\ContactMessage;
 use App\Observers\PostObserver;
 use App\Observers\UserObserver;
 use App\Events\SendNewTaskEvent;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Event;
 use App\Listeners\SendNewTaskListener;
 use Illuminate\Auth\Events\Registered;
 use App\Observers\PostCategoryObserber;
+use App\Listeners\SendContactMessageListener;
 use App\Listeners\Housing\SendNewBookingListener;
 use App\Listeners\Housing\SendAcceptBookingListener;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -41,6 +43,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendNewTaskEvent::class => [
             SendNewTaskListener::class
+        ],
+        ContactMessage::class => [
+            SendContactMessageListener::class
         ]
     ];
 
