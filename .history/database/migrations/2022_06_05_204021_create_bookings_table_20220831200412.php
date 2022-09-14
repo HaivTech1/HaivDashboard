@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBookingsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('bookings', function (Blueprint $table) {
+            $table->uuid('uuid')->unique();
+            $table->boolean('amenities')->default(0);
+            $table->boolean('furnish')->default(0);
+            $table->double('totalPrice')->nullable();
+            $table->boolean('isPaid')->default(0);
+            $table->string('paidAt')->nullable();
+            $table->enum('paymentMethod',['Cash','Paypal', 'Flutter'])->nullable();
+            $table->string('paymentResult')->nullable();
+            $table->foreignUuid('property_uuid')->constrained('users')->onDelete('cascade');
+            $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('bookings');
+    }
+}

@@ -48,7 +48,7 @@
 
 <script src="{{ asset('js/functions.js') }}"></script>
 
-
+<script src='{{ asset('js/mapbox-gl.js') }}'></script>
 
 <script>
 $(document).ready(function() {
@@ -94,6 +94,12 @@ $(document).ready(function() {
             break;
     }
     @endif
+</script>
+
+<script type="text/javascript">
+    window.addEventListener('show-details', event => {
+        $('#details').modal('show');
+    });
 </script>
 
 @yield('scripts')
